@@ -1,25 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { MAHASISWA } from './mahasiswa.mock';
 @Injectable()
 export class MahasiswaService {
   private mahasiswa = MAHASISWA;
-  public async getMahasiswa() {
+  public getMahasiswa() {
     return this.mahasiswa;
   }
 
-  public async postMahasiswa(mahasiswa) {
-    return;
+  public postMahasiswa(mahasiswa) {
+    return this.mahasiswa.push(mahasiswa);
   }
 
-  public async getMahasiswaById(id) {
-    return;
+  public getMahasiswaById(id: number) {
+    const mahasiswa = this.mahasiswa.find(
+      (m) => m.id.toString() === id.toString(),
+    );
+    if (mahasiswa) {
+      throw new HttpException('Not Found', 404);
+    }
+    return mahasiswa;
   }
 
-  public async deleteMahasiswaById(id) {
-    return;
+  public deleteMahasiswaById(id: number) {
+    const index = this.mahasiswa.findIndex(
+      (m) => m.id.toString() === id.toString(),
+    );
+    if (index === -1) {
+      throw new HttpException('Not Found', 404);
+    }
+    this.mahasiswa.splice(index, 1);
+    return this.mahasiswa;
   }
 
-  public async putMahasiswaById(id) {
+  public putMahasiswaById(id) {
     return;
   }
 }
