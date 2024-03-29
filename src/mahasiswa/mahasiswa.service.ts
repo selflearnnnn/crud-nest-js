@@ -32,7 +32,18 @@ export class MahasiswaService {
     return this.mahasiswa;
   }
 
-  public putMahasiswaById(id) {
-    return;
+  public putMahasiswaById(
+    id: number,
+    propertyName: string,
+    propertyValue: string,
+  ) {
+    const index = this.mahasiswa.findIndex(
+      (m) => m.id.toString() === id.toString(),
+    );
+    if (index === -1) {
+      throw new HttpException('Not Found', 404);
+    }
+    this.mahasiswa[index][propertyName] = propertyValue;
+    return this.mahasiswa;
   }
 }
