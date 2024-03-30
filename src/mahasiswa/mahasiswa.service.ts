@@ -12,19 +12,15 @@ export class MahasiswaService {
   }
 
   public getMahasiswaById(id: number) {
-    const mahasiswa = this.mahasiswa.find(
-      (m) => m.id.toString() === id.toString(),
-    );
-    if (mahasiswa) {
+    const mahasiswa = this.mahasiswa.find((m) => m.id === id.toString());
+    if (!mahasiswa) {
       throw new HttpException('Not Found', 404);
     }
     return mahasiswa;
   }
 
   public deleteMahasiswaById(id: number) {
-    const index = this.mahasiswa.findIndex(
-      (m) => m.id.toString() === id.toString(),
-    );
+    const index = this.mahasiswa.findIndex((m) => m.id === id.toString());
     if (index === -1) {
       throw new HttpException('Not Found', 404);
     }
@@ -37,9 +33,7 @@ export class MahasiswaService {
     propertyName: string,
     propertyValue: string,
   ) {
-    const index = this.mahasiswa.findIndex(
-      (m) => m.id.toString() === id.toString(),
-    );
+    const index = this.mahasiswa.findIndex((m) => m.id === id.toString());
 
     // index === -1 mengecheck ada atau tidaknya di database
     if (index === -1) {

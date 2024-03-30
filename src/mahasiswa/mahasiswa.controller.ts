@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { MahasiswaService } from './mahasiswa.service';
 import { MahasiswaDto } from './mahasiswa.dto';
 
@@ -12,18 +21,30 @@ export class MahasiswaController {
   }
 
   @Post()
-  public postMahasiswa(@Body mahasiswa: MahasiswaDto) {
+  public postMahasiswa(@Body() mahasiswa: MahasiswaDto) {
     return this.mahasiswaService.postMahasiswa(mahasiswa);
   }
 
-  @Get()
-  public getMahasiswaById(id: number) {}
+  @Get(':id')
+  public getMahasiswaById(@Param('id') id: number) {
+    return this.mahasiswaService.getMahasiswaById(id);
+  }
 
-  @Delete()
-  public deleteMahasiswaById(id: number) {}
+  @Delete(':id')
+  public deleteMahasiswaById(@Param('id') id: number) {
+    return this.mahasiswaService.deleteMahasiswaById(id);
+  }
 
-  @Put()
-  public putMahasiswaById() {}
+  @Put(':id')
+  public putMahasiswaById(@Param('id') id: number, @Query() query) {
+    const propertyName = query.propertyName;
+    const propertyValue = query.propertyValue;
+    return this.mahasiswaService.putMahasiswaById(
+      id,
+      propertyName,
+      propertyValue,
+    );
+  }
 }
 
 // 46:39
