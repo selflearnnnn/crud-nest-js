@@ -40,9 +40,14 @@ export class MahasiswaService {
     const index = this.mahasiswa.findIndex(
       (m) => m.id.toString() === id.toString(),
     );
+
+    // index === -1 mengecheck ada atau tidaknya di database
     if (index === -1) {
       throw new HttpException('Not Found', 404);
     }
+    // mahasiswa[index] merujuk pada index yang sesuai dengan nilai 'index'
+    // [propertyName] notasi untuk mengakses properti objek berdasarkan nama
+    // [propertyValue] adalah nilai baru yang akan diberikan pada properti
     this.mahasiswa[index][propertyName] = propertyValue;
     return this.mahasiswa;
   }
